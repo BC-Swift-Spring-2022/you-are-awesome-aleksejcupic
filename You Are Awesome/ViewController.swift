@@ -11,8 +11,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
-    var imageNumber = 0
-    var messageNumber = 0
+    var imageNumber = -1
+    var messageNumber = -1
     let totalNumberOfImages = 9
     
     override func viewDidLoad() {
@@ -22,26 +22,30 @@ class ViewController: UIViewController {
     }
 
     @IBAction func messageButtonPressed(_ sender: UIButton) {
-        let messages = ["You are Awesome!", "You Are Great!", "You Are Fantastic", "Fabulous? That's You!", "When The Genius Bar Needs Help, They Call You!", "You've Got The Design Skills of Jony Ive"]
+        let messages = ["You are Awesome!",
+                        "You Are Great!",
+                        "You Are Fantastic",
+                        "Fabulous? That's You!",
+                        "When The Genius Bar Needs Help, They Call You!",
+                        "You've Got The Design Skills of Jony Ive"]
+      
         
         
-        var newMessage = messages[Int.random(in: 0...messages.count - 1)]
+        var newMessageNumber: Int
+        repeat {
+            newMessageNumber = Int.random(in: 0...messages.count - 1)
+        } while messageNumber == newMessageNumber
         
-        while messageLabel.text == newMessage {
-            print("*** There was a repeating value. Both newMessage and messageLabel.text = \(newMessage) and \(messageLabel.text!)")
-            newMessage = messages[Int.random(in: 0...messages.count - 1)]
-        }
-        messageLabel.text = newMessage
+        messageNumber = newMessageNumber
+        messageLabel.text = messages[messageNumber]
         
+        var newImageNumber: Int
+        repeat {
+            newImageNumber = Int.random(in: 0...totalNumberOfImages)
+        } while imageNumber == newImageNumber
         
-        var newImage = UIImage(named: "image\(Int.random(in: 0...totalNumberOfImages))")
-        
-        while imageView.image == newImage {
-            print("*** There was a repeating value. Both newImage and imageView.image are equal")
-            newImage = UIImage(named: "image\(Int.random(in: 0...totalNumberOfImages))")
-        }
-        imageView.image = newImage
-        
+        imageNumber = newImageNumber
+        imageView.image = UIImage(named: "image\(imageNumber)")
     }
 }
 
